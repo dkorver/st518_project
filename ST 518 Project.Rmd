@@ -1,0 +1,87 @@
+---
+title: "ST 518 Project"
+author: "Rachel Hencher, Dane Korver, Mohammed Mira"
+date: "2022-11-16"
+output: 
+  pdf_document:
+    toc: true
+---
+
+```{r setup, include = FALSE}
+library(readr)
+library(knitr)
+library(dplyr)
+library(GGally)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE)
+```
+
+# Executive Summary  
+*A one or two paragraph summary that includes a description of the experiment, significant results (including any interesting numerical results), and any conclusions you draw. The reader should be able to glean all the important aspects of your work from the executive summary. Effectively and succinctly convey objectives, summary of experimental design, and results and conclusions drawn from experiment.*  
+
+
+# Introduction  
+*Explain what you are trying to learn from the experiment -- you may borrow heavily from my description. Effectively describe the purpose of the experiment.*  
+
+
+# Experimental Design  
+*Include a description of the experiment and the data that was collected -- you may borrow heavily from my description. Effectively describe the experimental design and factors.*  
+
+Below, we have a brief look at the first ten rows of the data in order to begin to gain an understanding of the data set we are working with.  
+
+```{r data}
+data <- read_csv("effervescence.csv")
+data$Brand <- as.factor(data$Brand)
+data$Stirred <- as.factor(data$Stirred)
+kable(head(data, n = 10), caption = "First 10 Rows of Effervescence Data")
+```
+
+
+# Exploratory Analysis  
+*Make appropriate plots of the data and comment on any interesting features/associations you observe. You may also want to augment your visualizations with numerical computations (summary stats, correlation coefficients, etc.). Effectively describe results and insights gained from exploratory analysis; include any appropriate visualizations or computations to support your assessment.*  
+
+Summary statistics for each variable can be seen below. For the `Brand` and `Stirred` variables, we can see counts for each level. For the `Temp`, `Order`, and `Time` variables, we can see a five-number summary for each variable.  
+
+```{r summary stats}
+kable(summary(data), caption = "Summary Stats for Variables", digits = 2)
+```
+
+Correlations between each numeric variable can be seen below. A correlation coefficient close to -1 or 1 indicates a strong correlation between two variables and a correlation coefficient close to 0 indicates little to no correlation between two variables. For our data, we can see that there is a relatively strong correlation between `Time` and `Temperature`.  
+
+```{r correlation}
+corr_data <- data %>%
+              select(Temp, Order, Time)
+ggpairs(corr_data)
+```
+
+Description of plot below and conclusions.  
+
+```{r plot1}
+
+```
+
+Description of plot below and conclusions.  
+
+```{r plot2}
+
+```
+
+Description of plot below and conclusions.  
+
+```{r plot3}
+
+```
+
+Description of plot below and conclusions.  
+
+```{r plot4}
+
+```
+
+
+# Analysis and Results  
+*Fit appropriate models and follow good statistical analysis process to determine the best model to use. Make use of proper diagnostics. Choose the appropriate effects to compare, correctly estimate and test significance of the effects and trends.*  
+
+
+# Conclusion  
+*Effectively describe conclusions and reasons for recommendation, analysis limitations, and future work. Address the proper role of the Stirred variable in this analysis.*  
+
