@@ -53,23 +53,26 @@ corr_data <- data %>%
 ggpairs(corr_data)
 ```
 
-Description of plot below and conclusions example.  
+The box plot of time as a function of brand gives an indication that there is an effect of the two brands on time.  
 
-```{r plot1}
+```{r Box plot- time as a function of brand}
+boxplot(data$Time~data$Brand, col="light blue", xlab="Brand", ylab="Time")
+```
 
+The box plot of time as a function of stirred status gives an indication that there is an effect of the stirred status on time.  
+
+```{r Box plot- time as a function of stirred status }
+boxplot(data$Time~data$Stirred, col="light blue", xlab="Stirred", ylab="Time")
+```
+
+The box plot of time as a function of temperature gives an indication that there is an effect of the different temperatures on time. 
+
+```{r Box plot- time as a function of temperature }
+boxplot(data$Time~data$Temp, col="light blue", xlab="Temperature", ylab="Time")
 ```
 
 Description of plot below and conclusions.  
 
-```{r plot2}
-
-```
-
-Description of plot below and conclusions.  
-
-```{r plot3}
-
-```
 
 Description of plot below and conclusions.  
 
