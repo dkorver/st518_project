@@ -1,7 +1,7 @@
 ---
 title: "ST 518 Project"
 author: "Rachel Hencher, Dane Korver, Mohammed Mira"
-date: "2022-11-16"
+date: "2022-12-04"
 output: 
   pdf_document:
     toc: true
@@ -23,11 +23,9 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE)
 # Introduction  
 *Explain what you are trying to learn from the experiment -- you may borrow heavily from my description. Effectively describe the purpose of the experiment.*  
 
+The purpose of this experiment is to investigate specific factors and their effect on the amount of time it takes to dissolve a cold medicine tablet in water. The data is from an “Effervescent Experiment” designed to compare dissolving times of two different brands of tablets (name brand and store brand) at three different equally spaced water temperatures (6$^\circ$C, 23$^\circ$C, and  40$^\circ$C). The run order number, as well as whether or not the sample was stirred, were also recorded and are investigated in the analysis portions of this report.  
 
-# Experimental Design  
-*Include a description of the experiment and the data that was collected -- you may borrow heavily from my description. Effectively describe the experimental design and factors.*  
-
-Below, we have a brief look at the first ten rows of the data in order to begin to gain an understanding of the data set we are working with.  
+Below, we have a brief look at the first 10 of 48 rows of data in order to begin to gain an understanding of the data set we are working with.  
 
 ```{r data}
 data <- read_csv("effervescence.csv")
@@ -37,8 +35,13 @@ kable(head(data, n = 10), caption = "First 10 Rows of Effervescence Data")
 ```
 
 
+# Experimental Design  
+*Include a description of the experiment and the data that was collected -- you may borrow heavily from my description. Effectively describe the experimental design and factors.*   
+
+The experiment carried out was a complete block design where *b* = 2 blocks (by stirred status) were selected with *n* = 4 observations on each of the treatment combinations in each block. In Block I, the water was stirred using a magnetic stirring plate at 350 revolutions per minute, whereas in Block II, the water was not stirred. The time for the tablet to dissolve was measured from the moment the tablet was dropped into the water to the time the tablet was completely dissolved. Each tablet was dropped from a fixed height into 60mL of water. The observation was taken as an average of the times as measured by four experimenters and was recorded, along with the run order for each observation.  
+
+
 # Exploratory Analysis  
-*Make appropriate plots of the data and comment on any interesting features/associations you observe. You may also want to augment your visualizations with numerical computations (summary stats, correlation coefficients, etc.). Effectively describe results and insights gained from exploratory analysis; include any appropriate visualizations or computations to support your assessment.*  
 
 Summary statistics for each variable can be seen below. For the `Brand` and `Stirred` variables, we can see counts for each level. For the `Temp`, `Order`, and `Time` variables, we can see a five-number summary for each variable.  
 
