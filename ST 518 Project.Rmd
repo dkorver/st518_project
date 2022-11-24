@@ -12,6 +12,7 @@ library(readr)
 library(knitr)
 library(dplyr)
 library(GGally)
+library(ggplot2)
 knitr::opts_chunk$set(echo = FALSE, message = FALSE)
 ```
 
@@ -53,31 +54,22 @@ corr_data <- data %>%
 ggpairs(corr_data)
 ```
 
-The box plot of time as a function of brand gives an indication that there is an effect of the two brands on time.  
+The box plot below displays a five-number summary of dissolving time for each brand of tablet. The plot displays `Time` as a function of `Brand` and indicates that there is an effect of the brand on time.  
 
-```{r Box plot- time as a function of brand}
-boxplot(data$Time~data$Brand, col="light blue", xlab="Brand", ylab="Time")
+```{r box plot time v brand}
+ggplot(data, aes(x = Brand, y = Time)) + geom_boxplot(fill = "cornflowerblue") + labs(title = "Tablet Dissolve Time for Brand", x = "Brand", y = "Time (in seconds)") + scale_x_discrete(labels = c("Name", "Store"))
 ```
 
-The box plot of time as a function of stirred status gives an indication that there is an effect of the stirred status on time.  
+The box plot below displays a five-number summary of dissolving time for each stirred status. The box plot displays `Time` as a function of `Stirred` and indicates that there is an effect of the stirred status on time.  
 
-```{r Box plot- time as a function of stirred status }
-boxplot(data$Time~data$Stirred, col="light blue", xlab="Stirred", ylab="Time")
+```{r box plot time v stirred status }
+ggplot(data, aes(x = Stirred, y = Time)) + geom_boxplot(fill = "cornflowerblue") + labs(title = "Tablet Dissolve Time for Stirred Status", x = "Stirred Status", y = "Time (in seconds)") + scale_x_discrete(labels = c("No", "Yes"))
 ```
 
-The box plot of time as a function of temperature gives an indication that there is an effect of the different temperatures on time. 
+The scatterplot below displays the dissolving time for different water temperatures. `Time` is displayed as a function of `Temperature`, however, we can also see how the `Brand` and `Stirred` variables affect the dissolving time by observing the color and shape of the points. It is clear that a warmer temperature reduces the dissolving time. It also appears that, as mentioned above, stirring the water reduces the dissolving time and that at the higher temperatures, the store brand dissolves more quickly than the name brand tablets.   
 
-```{r Box plot- time as a function of temperature }
-boxplot(data$Time~data$Temp, col="light blue", xlab="Temperature", ylab="Time")
-```
-
-Description of plot below and conclusions.  
-
-
-Description of plot below and conclusions.  
-
-```{r plot4}
-
+```{r scatterplot time v temp}
+ggplot(data, aes(x = Temp, y = Time)) + geom_point(aes(color = Stirred, shape = Brand)) + labs(title = "Tablet Dissolve Time for Water Temperature", x = "Temperature (in degrees Celcius)", y = "Time (in seconds)") + scale_shape_discrete(labels = c("Name", "Store")) + scale_color_manual(values = c("cornflowerblue", "blue4"), labels = c("No", "Yes"))
 ```
 
 
