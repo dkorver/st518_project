@@ -4,7 +4,7 @@ author: "Rachel Hencher, Dane Korver, Mohammed Mira"
 date: "2022-12-04"
 output: 
   pdf_document:
-    toc: true
+    toc: true 
 ---
 
 ```{r setup, include = FALSE}
