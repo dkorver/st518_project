@@ -1,7 +1,7 @@
 ---
 title: "ST 518 Project"
 author: "Rachel Hencher, Dane Korver, Mohammed Mira"
-date: "2022-12-04"
+date: "`r Sys.Date()`"
 output: 
   pdf_document:
     toc: true
@@ -51,47 +51,47 @@ kable(summary(data), caption = "Summary Stats for Variables", digits = 2)
 
 Correlations between each numeric variable can be seen below. A correlation coefficient close to -1 or 1 indicates a strong correlation between two variables and a correlation coefficient close to 0 indicates little to no correlation between two variables. For our data, we can see that there is a relatively strong correlation between `Time` and `Temperature`.  
 
-```{r correlation}
+```{r correlation, fig.align='center', out.width = "300px"}
 corr_data <- data %>%
               select(Temp, Order, Time)
-ggpairs(corr_data)
+ggpairs(corr_data)+
+theme(plot.title=element_text(hjust=0.5)) 
 ```
 
 The box plot below displays a five-number summary of dissolving time for each brand of tablet. The plot displays `Time` as a function of `Brand` and indicates that there is an effect of the brand on time.  
 
-```{r box plot time v brand}
-ggplot(data, aes(x = Brand, y = Time)) + geom_boxplot(fill = "cornflowerblue") + labs(title = "Tablet Dissolve Time for Brand", x = "Brand", y = "Time (in seconds)") + scale_x_discrete(labels = c("Name", "Store"))
+```{r box plot time v brand, fig.align='center', out.width = "300px"}
+ggplot(data, aes(x = Brand, y = Time)) + 
+  geom_boxplot(fill = "cornflowerblue") + 
+  labs(title = "Tablet Dissolve Time for Brand", x = "Brand", y = "Time (in seconds)") +        scale_x_discrete(labels = c("Name", "Store")) +
+  theme(plot.title=element_text(hjust=0.5))
 ```
 
 The box plot below displays a five-number summary of dissolving time for each stirred status. The box plot displays `Time` as a function of `Stirred` and indicates that there is an effect of the stirred status on time.  
 
-```{r box plot time v stirred status }
-ggplot(data, aes(x = Stirred, y = Time)) + geom_boxplot(fill = "cornflowerblue") + labs(title = "Tablet Dissolve Time for Stirred Status", x = "Stirred Status", y = "Time (in seconds)") + scale_x_discrete(labels = c("No", "Yes"))
+```{r box plot time v stirred status, fig.align='center', out.width = "300px"}
+ggplot(data, aes(x = Stirred, y = Time)) + 
+  geom_boxplot(fill = "cornflowerblue") + 
+  labs(title = "Tablet Dissolve Time for Stirred Status", x = "Stirred Status", y = "Time (in seconds)") + scale_x_discrete(labels = c("No", "Yes")) +
+  theme(plot.title=element_text(hjust=0.5))
 ```
 
 The scatterplot below displays the dissolving time for different water temperatures. `Time` is displayed as a function of `Temperature`, however, we can also see how the `Brand` and `Stirred` variables affect the dissolving time by observing the color and shape of the points. It is clear that a warmer temperature reduces the dissolving time. It also appears that, as mentioned above, stirring the water reduces the dissolving time and that at the higher temperatures, the store brand dissolves more quickly than the name brand tablets.   
 
-```{r scatterplot time v temp}
-ggplot(data, aes(x = Temp, y = Time)) + geom_point(aes(color = Stirred, shape = Brand)) + labs(title = "Tablet Dissolve Time for Water Temperature", x = "Temperature (in degrees Celcius)", y = "Time (in seconds)") + scale_shape_discrete(labels = c("Name", "Store")) + scale_color_manual(values = c("cornflowerblue", "blue4"), labels = c("No", "Yes"))
+```{r scatterplot time v temp, fig.align='center', out.width = "300px"}
+ggplot(data, aes(x = Temp, y = Time)) + 
+  geom_point(aes(color = Stirred, shape = Brand)) + 
+  labs(title = "Tablet Dissolve Time for Water Temperature", 
+       x = "Temperature (in degrees Celcius)", 
+       y = "Time (in seconds)") + 
+  scale_shape_discrete(labels = c("Name", "Store")) + 
+  scale_color_manual(values = c("cornflowerblue", "blue4"), labels = c("No", "Yes")) +
+  theme(plot.title=element_text(hjust=0.5))
 ```
 
 
 # Analysis and Results  
 *Fit appropriate models and follow good statistical analysis process to determine the best model to use. Make use of proper diagnostics. Choose the appropriate effects to compare, correctly estimate and test significance of the effects and trends.*  
-
-# Fit model (no interaction)
-amod <- aov(Time~Brand+Temp+Stirred,data=data)
-par(mfrow=c(2,2), mar=c(2, 2, 2, 2))
-plot(amod, pch=19)
-par(mfrow=c(1,1), mar=c(5.1, 4.1, 4.1, 2.1))
-summary(amod)
-
-# Fit model (With interaction)
-amodint <- aov(Time~Brand*Temp*Stirred,data=data)
-par(mfrow=c(2,2), mar=c(2, 2, 2, 2))
-plot(amod, pch=19)
-par(mfrow=c(1,1), mar=c(5.1, 4.1, 4.1, 2.1))
-summary(amodint)
 
 
 # Conclusion  
