@@ -79,6 +79,20 @@ ggplot(data, aes(x = Temp, y = Time)) + geom_point(aes(color = Stirred, shape = 
 # Analysis and Results  
 *Fit appropriate models and follow good statistical analysis process to determine the best model to use. Make use of proper diagnostics. Choose the appropriate effects to compare, correctly estimate and test significance of the effects and trends.*  
 
+# Fit model (no interaction)
+amod <- aov(Time~Brand+Temp+Stirred,data=data)
+par(mfrow=c(2,2), mar=c(2, 2, 2, 2))
+plot(amod, pch=19)
+par(mfrow=c(1,1), mar=c(5.1, 4.1, 4.1, 2.1))
+summary(amod)
+
+# Fit model (With interaction)
+amodint <- aov(Time~Brand*Temp*Stirred,data=data)
+par(mfrow=c(2,2), mar=c(2, 2, 2, 2))
+plot(amod, pch=19)
+par(mfrow=c(1,1), mar=c(5.1, 4.1, 4.1, 2.1))
+summary(amodint)
+
 
 # Conclusion  
 *Effectively describe conclusions and reasons for recommendation, analysis limitations, and future work. Address the proper role of the Stirred variable in this analysis.*  
