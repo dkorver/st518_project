@@ -31,6 +31,7 @@ Below, we have a brief look at the first 10 of 48 rows of data in order to begin
 data <- read_csv("effervescence.csv")
 data$Brand <- as.factor(data$Brand)
 data$Stirred <- as.factor(data$Stirred)
+data$Temp <- as.factor(data$Temp)
 kable(head(data, n = 10), caption = "First 10 Rows of Effervescence Data")
 ```
 
@@ -47,15 +48,6 @@ Summary statistics for each variable can be seen below. For the `Brand` and `Sti
 
 ```{r summary stats}
 kable(summary(data), caption = "Summary Stats for Variables", digits = 2)
-```
-
-Correlations between each numeric variable can be seen below. A correlation coefficient close to -1 or 1 indicates a strong correlation between two variables and a correlation coefficient close to 0 indicates little to no correlation between two variables. For our data, we can see that there is a relatively strong correlation between `Time` and `Temperature`.  
-
-```{r correlation, fig.align='center', out.width = "300px"}
-corr_data <- data %>%
-              select(Temp, Order, Time)
-ggpairs(corr_data)+
-theme(plot.title = element_text(hjust=0.5)) 
 ```
 
 The box plot below displays a five-number summary of dissolving time for each brand of tablet. The plot displays `Time` as a function of `Brand` and indicates that there is an effect of the brand on time.  
@@ -78,21 +70,7 @@ ggplot(data, aes(x = Stirred, y = Time)) +
 
 The scatterplot below displays the dissolving time for different water temperatures. `Time` is displayed as a function of `Temperature`, however, we can also see how the `Brand` and `Stirred` variables affect the dissolving time by observing the color and shape of the points. It is clear that a warmer temperature reduces the dissolving time. It also appears that, as mentioned above, stirring the water reduces the dissolving time and that at the higher temperatures, the store brand dissolves more quickly than the name brand tablets.   
 
-```{r scatterplot time v temp, fig.align='center', out.width = "300px"}
-ggplot(data, aes(x = Temp, y = Time)) + 
-  geom_point(aes(color = Stirred, shape = Brand)) + 
-  labs(title = "Tablet Dissolve Time for Water Temperature", 
-       x = "Temperature (in degrees Celcius)", 
-       y = "Time (in seconds)") + 
-  scale_shape_discrete(labels = c("Name", "Store")) + 
-  scale_color_manual(values = c("cornflowerblue", "blue4"), labels = c("No", "Yes")) +
-  theme(plot.title = element_text(hjust=0.5))
-```
-
-**TEST PLOT**
-```{r TEST PLOT, fig.align='center', out.width = "300px"}
-data$Temp <- as.factor(data$Temp)
-
+```{r boxplot time v temp, fig.align='center', out.width = "300px"}
 ggplot(data, aes(x = Temp, y = Time)) + 
   geom_boxplot() + 
   geom_point(aes(color = Stirred, shape = Brand)) + 
