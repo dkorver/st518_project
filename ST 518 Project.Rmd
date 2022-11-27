@@ -4,7 +4,7 @@ author: "Rachel Hencher, Dane Korver, Mohammed Mira"
 date: "`r Sys.Date()`"
 output: 
   pdf_document:
-    toc: true
+    toc: true 
 ---
 
 ```{r setup, include = FALSE}
@@ -92,6 +92,23 @@ ggplot(data, aes(x = Temp, y = Time)) +
 
 # Analysis and Results  
 *Fit appropriate models and follow good statistical analysis process to determine the best model to use. Make use of proper diagnostics. Choose the appropriate effects to compare, correctly estimate and test significance of the effects and trends.*  
+
+
+```{r interaction model}
+amod <- aov(Time~Brand+Temp+Stirred,data=data)
+par(mfrow=c(2,2), mar=c(2, 2, 2, 2))
+plot(amod, pch=19)
+par(mfrow=c(1,1), mar=c(5.1, 4.1, 4.1, 2.1))
+summary(amod)
+```
+
+```{r no interaction model}
+amodint <- aov(Time~Brand*Temp*Stirred,data=data)
+par(mfrow=c(2,2), mar=c(2, 2, 2, 2))
+plot(amod, pch=19)
+par(mfrow=c(1,1), mar=c(5.1, 4.1, 4.1, 2.1))
+summary(amodint)
+```
 
 
 # Conclusion  
