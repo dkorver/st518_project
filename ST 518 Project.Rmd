@@ -32,6 +32,7 @@ data <- read_csv("effervescence.csv")
 data$Brand <- as.factor(data$Brand)
 data$Stirred <- as.factor(data$Stirred)
 data$Temp <- as.factor(data$Temp)
+data$Order <- as.factor(data$Order)
 kable(head(data, n = 10), caption = "First 10 Rows of Effervescence Data")
 ```
 
@@ -44,33 +45,50 @@ The experiment carried out was a complete block design where *b* = 2 blocks (by 
 
 # Exploratory Analysis  
 
-Summary statistics for each variable can be seen below. For the `Brand` and `Stirred` variables, we can see counts for each level. For the `Temp`, `Order`, and `Time` variables, we can see a five-number summary for each variable.  
+Summary statistics for each variable can be seen below. For the `Brand`, `Temp`, `Stirred`, and `Order` variables, we can see counts for each level. For the `Time` variable, we can see a five-number summary for the variable.  
 
 ```{r summary stats}
 kable(summary(data), caption = "Summary Stats for Variables", digits = 2)
 ```
 
+**Add text here**  
+
+```{r addtl summary stats}
+data_stats <- data %>%
+                as_tibble() %>%
+                group_by(Brand, Stirred, Temp) %>%
+                summarise_at(vars(Time), list(Mean = mean, 
+                                              SD = sd,
+                                              Min = min, 
+                                              Q1 = ~quantile(., probs = 0.25), 
+                                              Median = median, 
+                                              Q3 = ~quantile(., probs = 0.75), 
+                                              Max = max))
+
+kable(data_stats, caption = "Summary Stats for Time by Group", digits = 2)
+```
+
 The box plot below displays a five-number summary of dissolving time for each brand of tablet. The plot displays `Time` as a function of `Brand` and indicates that there is an effect of the brand on time.  
 
-```{r box plot time v brand, fig.align='center', out.width = "300px"}
+```{r box plot time v brand, fig.align = 'center', out.width = "300px"}
 ggplot(data, aes(x = Brand, y = Time)) + 
   geom_boxplot(fill = "cornflowerblue") + 
   labs(title = "Tablet Dissolve Time for Brand", x = "Brand", y = "Time (in seconds)") +        scale_x_discrete(labels = c("Name", "Store")) +
-  theme(plot.title = element_text(hjust=0.5))
+  theme(plot.title = element_text(hjust = 0.5))
 ```
 
 The box plot below displays a five-number summary of dissolving time for each stirred status. The box plot displays `Time` as a function of `Stirred` and indicates that there is an effect of the stirred status on time.  
 
-```{r box plot time v stirred status, fig.align='center', out.width = "300px"}
+```{r box plot time v stirred status, fig.align = 'center', out.width = "300px"}
 ggplot(data, aes(x = Stirred, y = Time)) + 
   geom_boxplot(fill = "cornflowerblue") + 
   labs(title = "Tablet Dissolve Time for Stirred Status", x = "Stirred Status", y = "Time (in seconds)") + scale_x_discrete(labels = c("No", "Yes")) +
-  theme(plot.title = element_text(hjust=0.5))
+  theme(plot.title = element_text(hjust = 0.5))
 ```
 
-The scatterplot below displays the dissolving time for different water temperatures. `Time` is displayed as a function of `Temperature`, however, we can also see how the `Brand` and `Stirred` variables affect the dissolving time by observing the color and shape of the points. It is clear that a warmer temperature reduces the dissolving time. It also appears that, as mentioned above, stirring the water reduces the dissolving time and that at the higher temperatures, the store brand dissolves more quickly than the name brand tablets.   
+The box plot below displays the dissolving time for different water temperatures. `Time` is displayed as a function of `Temperature`, however, we can also see how the `Brand` and `Stirred` variables affect the dissolving time by observing the color and shape of the points. It is clear that a warmer temperature reduces the dissolving time. It also appears that, as mentioned above, stirring the water reduces the dissolving time and that at the higher temperatures, the store brand dissolves more quickly than the name brand tablets.   
 
-```{r boxplot time v temp, fig.align='center', out.width = "300px"}
+```{r box plot time v temp, fig.align = 'center', out.width = "400px"}
 ggplot(data, aes(x = Temp, y = Time)) + 
   geom_boxplot() + 
   geom_point(aes(color = Stirred, shape = Brand)) + 
@@ -86,39 +104,34 @@ ggplot(data, aes(x = Temp, y = Time)) +
 # Analysis and Results  
 *Fit appropriate models and follow good statistical analysis process to determine the best model to use. Make use of proper diagnostics. Choose the appropriate effects to compare, correctly estimate and test significance of the effects and trends.*  
 
-```{r no interaction model}
-amod <- aov(Time ~ Brand + Temp + Stirred, data = data)
+**Add text here**  
+
+```{r no interaction model, fig.align = 'center', out.width = "300px"}
+amod1 <- aov(Time ~ Brand + Temp + Stirred, data = data)
 par(mfrow = c(2,2), mar = c(2, 2, 2, 2))
-plot(amod, pch = 19)
+plot(amod1, pch = 19)
 par(mfrow = c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))
-summary(amod)
+summary(amod1)
 ```
 
-```{r interaction model}
-amodint <- aov(Time ~ Brand*Temp*Stirred, data = data)
+**Add text here**  
+
+```{r interaction model, fig.align = 'center', out.width = "300px"}
+amod2 <- aov(Time ~ Brand*Temp*Stirred, data = data)
 par(mfrow = c(2,2), mar = c(2, 2, 2, 2))
-plot(amod, pch = 19)
+plot(amod2, pch = 19)
 par(mfrow = c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))
-summary(amodint)
+summary(amod2)
 ```
 
-```{r, eval=FALSE}
-# Interaction plots: by Stirred
-with(data[data$Stirred==0,], interaction.plot(Temp, Brand, Time, 
-                        type = "b", pch = 19, col = c(2,4), main = "Stirred",
-                        ylab="Mean Time"))
+**Add text here**  
 
-with(data[data$Stirred==1,], interaction.plot(Temp, Brand, Time, 
-                        type = "b", pch = 19, col = c(2,4), main = "Not Stirred",
-                        ylab = "Mean Time"))
-```
-
-```{r significant terms model}
-amodint <- aov(Time ~ Brand + Temp + Stirred + Brand:Temp + Brand:Stirred, data = data)
+```{r significant terms model, fig.align = 'center', out.width = "300px"}
+amod3 <- aov(Time ~ Brand + Temp + Stirred + Brand:Temp + Brand:Stirred, data = data)
 par(mfrow = c(2,2), mar = c(2, 2, 2, 2))
-plot(amod, pch = 19)
+plot(amod3, pch = 19)
 par(mfrow = c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))
-summary(amodint)
+summary(amod3)
 ```
 
 ```{r, eval=FALSE}
