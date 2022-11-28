@@ -163,6 +163,12 @@ model_names <- c("Model 1", "Model 2", "Model 3")
 aictab(model_set, modnames = model_names)
 ```
 
+**Tukey's**  
+
+```{r}
+TukeyHSD(aov(Time ~ Brand + Temp, data = data))
+```
+
 
 # Conclusion  
 *Effectively describe conclusions and reasons for recommendation, analysis limitations, and future work. Address the proper role of the Stirred variable in this analysis.*  
