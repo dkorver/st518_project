@@ -104,7 +104,7 @@ ggplot(data, aes(x = Temp, y = Time)) +
 # Analysis and Results  
 *Fit appropriate models and follow good statistical analysis process to determine the best model to use. Make use of proper diagnostics. Choose the appropriate effects to compare, correctly estimate and test significance of the effects and trends.*  
 
-**Add text here**  
+**Model 1**  
 
 ```{r no interaction model, fig.align = 'center', out.width = "300px"}
 amod1 <- aov(Time ~ Brand + Temp + Stirred, data = data)
@@ -114,7 +114,13 @@ par(mfrow = c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))
 summary(amod1)
 ```
 
-**Add text here**  
+**Coefficients of Model 1**  
+
+```{r model1 coefficients}
+coefficients(amod1)
+```
+
+**Model 2**  
 
 ```{r interaction model, fig.align = 'center', out.width = "300px"}
 amod2 <- aov(Time ~ Brand*Temp*Stirred, data = data)
@@ -124,7 +130,13 @@ par(mfrow = c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))
 summary(amod2)
 ```
 
-**Add text here**  
+**Coefficients of Model 2**  
+
+```{r model2 coefficients}
+coefficients(amod2)
+```
+
+**Model 3**  
 
 ```{r significant terms model, fig.align = 'center', out.width = "300px"}
 amod3 <- aov(Time ~ Brand + Temp + Stirred + Brand:Temp + Brand:Stirred, data = data)
@@ -134,15 +146,21 @@ par(mfrow = c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))
 summary(amod3)
 ```
 
-```{r, eval=FALSE}
-# Interaction plots: by Stirred
-with(data[data$Stirred==0,], interaction.plot(Temp, Brand, Time, 
-                        type = "b", pch = 19, col = c(2,4), main = "Stirred",
-                        ylab="Mean Time"))
+**Coefficients of Model 3**  
 
-with(data[data$Stirred==1,], interaction.plot(Temp, Brand, Time, 
-                        type = "b", pch = 19, col = c(2,4), main = "Not Stirred",
-                        ylab = "Mean Time"))
+```{r model3 coefficients}
+coefficients(amod3)
+```
+
+**Model selection by AIC criterion**  
+
+```{r model selection}
+library(AICcmodavg)
+
+model_set <- list(amod1, amod2, amod3)
+model_names <- c("Model 1", "Model 2", "Model 3")
+
+aictab(model_set, modnames = model_names)
 ```
 
 
