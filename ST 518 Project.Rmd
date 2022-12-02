@@ -51,7 +51,7 @@ Summary statistics for each variable can be seen below. For the `Brand`, `Temp`,
 kable(summary(data), caption = "Summary Stats for Variables", digits = 2)
 ```
 
-**Add text here**  
+The Summary Stats for Time by Group Table shows a decrease in dissolving time as Temp increases regardless of Brand or Stirred status.  There doesn't appear to be a trend between Name and Store Brand.  For example, when the water was stirred for the Name Brand at Temp 6, 20 and 40, the mean was 76.2, 72.69, and 65.85, respectively.  When the water was stirred for the Store Brand at Temp 6, 20 and 40, the mean was 77.34, 66.12, and 59.13, respectively.  Name Brand generally had a higher dissolving time, but occasionally, Store Brand would have a higher dissolve time than Name Brand.  The same was for when the water was not Stirred, both instances at the 6 degree Temp.  There was also some unusally high standard deviations for Name Brand at the 23 and 40 degree Temps with their standard deviations at 2.64 and 1.6, respectively.  Both instances where the water was Stirred.  Store Brand at 6 degree Temp, not Stirred had a standard deviation of 1.3.  The standard deviations tended to range between 0.2 and 0.77.         
 
 ```{r addtl summary stats}
 data_stats <- data %>%
