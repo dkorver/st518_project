@@ -135,9 +135,7 @@ par(mfrow = c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))
 summary(amod3)
 ```
 
-
-
-**Using Order as a covariate with Time**  
+## Using Order as a Covariate with Time  
 
 When we graph the Order variable with respect to Time and group it by Stirred, there appears to be a linear association between the two blocks, albeit weak, but when we look at the two blocks separately, we can see the potential of using Order as a covariate to assist us in determining if there is a difference in dissolving times between the two blocks.
 
