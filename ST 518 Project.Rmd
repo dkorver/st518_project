@@ -180,6 +180,16 @@ Time = Mean + Brand + Temp + Brand*Temp + Error
   
 When we look at our model for Block 1 and Block 2, we see that our regression slopes are not all equal to 0 given the p-values (<0.001) for both models are less than our significance level of 0.05 and that there is a significant interaction effect. Since we have different slopes we can look at the differences between Brand and Temp at the different levels. For both Blocks, we can see that there was not a significant difference between the Brands at 6 degrees Celsius.
 
+Output for Stirred=No.  
+```{r, echo = FALSE, eval = TRUE, fig.align='center', out.width = "300px"}
+knitr::include_graphics("stirred_no.png")
+``` 
+
+Output for Stirred=Yes.
+```{r, echo = FALSE, eval = TRUE, fig.align='center', out.width = "300px"}
+knitr::include_graphics("stirred_yes.png")
+``` 
+
 # Conclusion  
 *Effectively describe conclusions and reasons for recommendation, analysis limitations, and future work. Address the proper role of the Stirred variable in this analysis.*  
  
