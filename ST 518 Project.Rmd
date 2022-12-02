@@ -152,7 +152,8 @@ summary(amod3)
 coefficients(amod3)
 ```
 
-## Model selection by AIC criterion  
+
+**Model selection by AIC criterion**  
 
 ```{r model selection}
 library(AICcmodavg)
@@ -171,11 +172,11 @@ When we graph the Order variable with respect to Time and group it by Stirred, t
 knitr::include_graphics("figure_for_project.png")
 ```  
 
-For Block 1, where the liquid was stirred, there appears to be a downward linear trend in the dissolving time of the cold medicine tablets. For Block 2, where the liquid was not stirred, there appears to be an upward linear trend in the dissolving time of the cold medicine tablets. Since the Order variable directly matches the Stirred variable, meaning the first 24 values of Order coincide with Block 1 and the second 24 values of Order coincide with Block 2 and the slopes for the two Blocks are not moving in the same direction as we can observe looking at our initial graph, we can write our model as follows: 
+For Block 1, where the liquid was stirred, there appears to be a downward linear trend in the dissolving time of the cold medicine tablets. For Block 2, where the liquid was not stirred, there appears to be an upward linear trend in the dissolving time of the cold medicine tablets. Since the `Order` variable directly matches the `Stirred` variable, meaning the first 24 values of `Order` coincide with Block 1 and the second 24 values of `Order` coincide with Block 2 and the slopes for the two Blocks are not moving in the same direction as we can observe looking at our initial graph, we can write our model as follows: 
   
-Time = Mean + Brand + Temp + Brand*Temp + Error
+$$Time = Mean + Brand + Temp + Brand*Temp + Error$$
   
-When we look at our model for Block 1 and Block 2, we see that our regression slopes are not all equal to 0 given the p-values (<0.001) for both models are less than our significance level of 0.05 and that there is a significant interaction effect. Since we have different slopes we can look at the differences between Brand and Temp at the different levels. For both Blocks, we can see that there was not a significant difference between the Brands at 6 degrees Celsius.
+When we look at our model for Block 1 and Block 2, we see that our regression slopes are not all equal to 0 given the p-values (<0.001) for both models are less than our significance level of 0.05 and that there is a significant interaction effect. Since we have different slopes we can look at the differences between `Brand` and `Temp` at the different levels. For both Blocks, we can see that there was not a significant difference between the Brands at 6 degrees Celsius.
 
 Output for Stirred=No.  
 ```{r, echo = FALSE, eval = FALSE, fig.align='center', out.width = "300px"}
