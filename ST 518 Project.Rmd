@@ -103,68 +103,65 @@ ggplot(data, aes(x = Temp, y = Time)) +
 # Analysis and Results  
 *Fit appropriate models and follow good statistical analysis process to determine the best model to use. Make use of proper diagnostics. Choose the appropriate effects to compare, correctly estimate and test significance of the effects and trends.*  
 
-**Model 1**  
+## Two Factor Crossed Mixed Effects Model  
 
-```{r no interaction model, fig.align = 'center', out.width = "300px"}
-amod1 <- aov(Time ~ Brand + Temp + Stirred, data = data)
+```{r model 1, fig.align = 'center', out.width = "300px"}
+amod1 <- aov(Time ~ Brand + Temp + Brand:Temp, data = data)
 par(mfrow = c(2,2), mar = c(2, 2, 2, 2))
 plot(amod1, pch = 19)
 par(mfrow = c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))
 summary(amod1)
 ```
 
-**Coefficients of Model 1**  
+### Coefficients for Two Factor Crossed Mixed Effects Model  
 
-```{r model1 coefficients}
+```{r model 1 coefficients}
 coefficients(amod1)
 ```
 
-**Model 2**  
 
-```{r interaction model, fig.align = 'center', out.width = "300px"}
-amod2 <- aov(Time ~ Brand*Temp*Stirred, data = data)
+## Model 2  
+
+```{r model 2, fig.align = 'center', out.width = "300px"}
+amod2 <- aov(Time ~ Brand + Temp + Stirred, data = data)
 par(mfrow = c(2,2), mar = c(2, 2, 2, 2))
 plot(amod2, pch = 19)
 par(mfrow = c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))
 summary(amod2)
 ```
 
-**Coefficients of Model 2**  
+### Coefficients of Model 2  
 
-```{r model2 coefficients}
+```{r model 2 coefficients}
 coefficients(amod2)
 ```
 
-**Model 3**  
+## Three Factor Crossed Mixed Effects Model  
 
-```{r significant terms model, fig.align = 'center', out.width = "300px"}
-amod3 <- aov(Time ~ Brand + Temp + Stirred + Brand:Temp + Brand:Stirred, data = data)
+```{r model 3, fig.align = 'center', out.width = "300px"}
+amod3 <- aov(Time ~ Brand*Temp*Stirred, data = data)
 par(mfrow = c(2,2), mar = c(2, 2, 2, 2))
 plot(amod3, pch = 19)
 par(mfrow = c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))
 summary(amod3)
 ```
 
-**Coefficients of Model 3**  
+### Coefficients of Three Factor Crossed Mixed Effects Model  
 
-```{r model3 coefficients}
+```{r model 3 coefficients}
 coefficients(amod3)
 ```
 
-**Model selection by AIC criterion**  
+## Model selection by AIC criterion  
 
 ```{r model selection}
 library(AICcmodavg)
 model_set <- list(amod1, amod2, amod3)
-model_names <- c("Model 1", "Model 2", "Model 3")
+model_names <- c("Two Factor Crossed Mixed Effects", "Model 2", "Three Factor Crossed Mixed Effects")
 aictab(model_set, modnames = model_names)
 ```
 
-**Tukey's**  
 
-```{r}
-TukeyHSD(aov(Time ~ Brand + Temp, data = data))
-```
 
 **Using Order as a covariate with Time**  
 
@@ -181,12 +178,12 @@ Time = Mean + Brand + Temp + Brand*Temp + Error
 When we look at our model for Block 1 and Block 2, we see that our regression slopes are not all equal to 0 given the p-values (<0.001) for both models are less than our significance level of 0.05 and that there is a significant interaction effect. Since we have different slopes we can look at the differences between Brand and Temp at the different levels. For both Blocks, we can see that there was not a significant difference between the Brands at 6 degrees Celsius.
 
 Output for Stirred=No.  
-```{r, echo = FALSE, eval = TRUE, fig.align='center', out.width = "300px"}
+```{r, echo = FALSE, eval = FALSE, fig.align='center', out.width = "300px"}
 knitr::include_graphics("stirred_no.png")
 ``` 
 
 Output for Stirred=Yes.
-```{r, echo = FALSE, eval = TRUE, fig.align='center', out.width = "300px"}
+```{r, echo = FALSE, eval = FALSE, fig.align='center', out.width = "300px"}
 knitr::include_graphics("stirred_yes.png")
 ``` 
 
