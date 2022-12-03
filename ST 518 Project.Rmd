@@ -102,6 +102,8 @@ ggplot(data, aes(x = Temp, y = Time)) +
 
 ## Two Factor Crossed Mixed Effects Model  
 
+MOHAMMED TO TYPE HERE
+
 ```{r model 1, fig.align = 'center', out.width = "300px"}
 amod1 <- aov(Time ~ Brand + Temp + Brand:Temp, data = data)
 par(mfrow = c(2,2), mar = c(2, 2, 2, 2))
