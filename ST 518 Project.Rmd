@@ -67,7 +67,7 @@ kable(data_stats, caption = "Summary Stats for Time by Group", digits = 2)
 
 The box plot below displays a five-number summary of dissolving time for each brand of tablet. The plot displays `Time` as a function of `Brand` and indicates that there is an effect of the brand on time.  
 
-```{r box plot time v brand, fig.align = 'center', out.width = "300px"}
+```{r box plot time v brand, fig.align = 'center', out.width = "270px"}
 ggplot(data, aes(x = Brand, y = Time)) + 
   geom_boxplot(fill = "cornflowerblue") + 
   labs(title = "Tablet Dissolve Time for Brand", x = "Brand", y = "Time (in seconds)") +        scale_x_discrete(labels = c("Name", "Store")) +
@@ -76,7 +76,7 @@ ggplot(data, aes(x = Brand, y = Time)) +
 
 The box plot below displays a five-number summary of dissolving time for each stirred status. The box plot displays `Time` as a function of `Stirred` and indicates that there is an effect of the stirred status on time.  
 
-```{r box plot time v stirred status, fig.align = 'center', out.width = "300px"}
+```{r box plot time v stirred status, fig.align = 'center', out.width = "270px"}
 ggplot(data, aes(x = Stirred, y = Time)) + 
   geom_boxplot(fill = "cornflowerblue") + 
   labs(title = "Tablet Dissolve Time for Stirred Status", x = "Stirred Status", y = "Time (in seconds)") + scale_x_discrete(labels = c("No", "Yes")) +
@@ -85,7 +85,7 @@ ggplot(data, aes(x = Stirred, y = Time)) +
 
 The box plot below displays the dissolving time for different water temperatures. `Time` is displayed as a function of `Temperature`, however, we can also see how the `Brand` and `Stirred` variables affect the dissolving time by observing the color and shape of the points. It is clear that a warmer temperature reduces the dissolving time. It also appears that, as mentioned above, stirring the water reduces the dissolving time and that at the higher temperatures, the store brand dissolves more quickly than the name brand tablets.   
 
-```{r box plot time v temp, fig.align = 'center', out.width = "400px"}
+```{r box plot time v temp, fig.align = 'center', out.width = "320px"}
 ggplot(data, aes(x = Temp, y = Time)) + 
   geom_boxplot() + 
   geom_point(aes(color = Stirred, shape = Brand)) + 
@@ -104,7 +104,7 @@ ggplot(data, aes(x = Temp, y = Time)) +
 
 MOHAMMED TO TYPE HERE
 
-```{r model 1, fig.align = 'center', out.width = "300px"}
+```{r model 1, fig.align = 'center', out.width = "270px"}
 amod1 <- aov(Time ~ Brand + Temp + Brand:Temp, data = data)
 par(mfrow = c(2,2), mar = c(2, 2, 2, 2))
 plot(amod1, pch = 19)
@@ -112,11 +112,11 @@ par(mfrow = c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))
 summary(amod1)
 ```
 
-Our model is $Y_{ijk}=\mu+\alpha_i+B_j+(\alpha B)_{ij}+E_{ijk}$  
+Our model is $Y_{ijk}=\mu+\alpha_i+B_j+(\alpha B)_{ij}+\epsilon_{ijk}$  
 
 for $i=1,2$;  $j=1,2,3$;  $k=1,...,8$  
 
-where $B_j$*~iid* $N(0,\sigma_\beta^2)$;  $(\alpha B)_{ij}$*~iid* $N(0,\sigma_{\alpha B}^2)$;  $E_{ijk}$*~iid* $N(0,\sigma^2)$  
+where $B_j$*~iid* $N(0,\sigma_B^2)$;  $(\alpha B)_{ij}$*~iid* $N(0,\sigma_{\alpha B}^2)$;  $\epsilon_{ijk}$*~iid* $N(0,\sigma^2)$  
 *We also require that each of the above are independent of each other.*   
 
 $Y_{ijk}$ is the dissolving time  
@@ -124,11 +124,11 @@ $\mu$ is the overall mean
 $\alpha_i$ is the fixed effect due to the ith brand  
 $B_j$ is the random effect due to the jth temperature  
 $\alpha B_{ij}$ is the interaction effect between the ith brand and jth temp  
-$E_{ijk}$ is the error term  
+$\epsilon_{ijk}$ is the error term  
 
 ## Three Factor Analysis of Variance Model  
 
-```{r model 2, fig.align = 'center', out.width = "300px"}
+```{r model 2, fig.align = 'center', out.width = "270px"}
 amod2 <- aov(Time ~ Brand + Temp + Stirred, data = data)
 par(mfrow = c(2,2), mar = c(2, 2, 2, 2))
 plot(amod2, pch = 19)
@@ -136,13 +136,23 @@ par(mfrow = c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))
 summary(amod2)
 ```
 
-Our model is $Y_{ijk}=\mu+\alpha_i+\beta_j+\gamma_k+\epsilon_{ijkl}$  
+Our model is $Y_{ijk}=\mu+\alpha_i+B_j+\gamma_k+\epsilon_{ijkl}$  
 
 for $i=1,2$;  $j=1,2,3$;  $k=1,2$;  $l=1,...48$  
 
+where $B_j$*~iid* $N(0,\sigma_B^2)$;  $\epsilon_{ijkl}$*~iid* $N(0,\sigma^2)$  
+*We also require that each of the above are independent of each other.*  
+
+$Y_{ijkl}$ is the dissolving time  
+$\mu$ is the overall mean  
+$\alpha_i$ is the fixed effect due to the ith brand  
+$B_j$ is the random effect due to the jth temperature  
+$\gamma_k$ is the fixed effect due to the kth stirred status  
+$\epsilon_{ijkl}$ is the error term  
+
 ## Three Factor Crossed Mixed Effects Model  
 
-```{r model 3, fig.align = 'center', out.width = "300px"}
+```{r model 3, fig.align = 'center', out.width = "270px"}
 amod3 <- aov(Time ~ Brand*Temp*Stirred, data = data)
 par(mfrow = c(2,2), mar = c(2, 2, 2, 2))
 plot(amod3, pch = 19)
@@ -150,25 +160,29 @@ par(mfrow = c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))
 summary(amod3)
 ```
 
-Our model is $Y_{ijkl}=\mu+\alpha_i+\beta_j+\gamma_k+(\alpha\beta)_{ij}+(\alpha\gamma)_{ik}+(\beta\gamma)_{jk}+(\alpha\beta\gamma)_{ijk}+E_{ijkl}$  
+Our model is $Y_{ijkl}=\mu+\alpha_i+B_j+\gamma_k+(\alpha B)_{ij}+(\alpha\gamma)_{ik}+(B\gamma)_{jk}+(\alpha B\gamma)_{ijk}+\epsilon_{ijkl}$  
 
-for $i=1,2$;  $j=1,2,3$;  $k=1,2,3,4$;  $l=1,...,48$   
+for $i=1,2$;  $j=1,2,3$;  $k=1,2$;  $l=1,...,48$   
+
+where $B_j$*~iid* $N(0,\sigma_B^2)$;  $(\alpha B)_{ij}$*~iid* $N(0,\sigma_{\alpha B}^2)$;  $B\gamma_{jk}$*~iid* $N(0,\sigma_{B\gamma}^2)$; $\alpha B\gamma_{ijk}$*~iid* $N(0,\sigma_{\alpha B\gamma}^2)$; $\epsilon_{ijk}$*~iid* $N(0,\sigma^2)$  
+*We also require that each of the above are independent of each other.*  
 
 $Y_{ijkl}$ is the dissolving time  
 $\mu$ is the overall mean  
 $\alpha_i$ is the fixed effect due to the ith brand  
-$\beta_j$ is the random effect due to the jth temperature  
+$B_j$ is the random effect due to the jth temperature  
 $\gamma_k$ is the fixed effect due to the kth stirred status  
-$\alpha\beta_{ij}$ is the interaction effect between the ith brand and jth temp  
+$\alpha B_{ij}$ is the interaction effect between the ith brand and jth temp  
 $\alpha\gamma_{ik}$ is the interaction effect between the ith brand and kth stirred status  
-$\beta\gamma_{jk}$ is the interaction effect between the jth temp and kth stirred status  
-$E_{ijkl}$ is the error term  
+$B\gamma_{jk}$ is the interaction effect between the jth temp and kth stirred status  
+$\alpha B\gamma_{ijk}$ is the interaction effect between the ith brand jth temperature and kth stirred status  
+$\epsilon_{ijkl}$ is the error term  
 
 ## Using Order as a Covariate with Time  
 
 When we graph the Order variable with respect to Time and group it by Stirred, there appears to be a linear association between the two blocks, albeit weak, but when we look at the two blocks separately, we can see the potential of using Order as a covariate to assist us in determining if there is a difference in dissolving times between the two blocks.
 
-```{r, echo = FALSE, eval = TRUE, fig.align='center', out.width = "300px"}
+```{r, echo = FALSE, eval = TRUE, fig.align='center', out.width = "270px"}
 knitr::include_graphics("figure_for_project.png")
 ```  
 
@@ -180,11 +194,10 @@ When we look at our model for Block 1 and Block 2, we see that our regression sl
 
 
 # Conclusion  
-*Effectively describe conclusions and reasons for recommendation, analysis limitations, and future work. Address the proper role of the Stirred variable in this analysis.*  
 
 The model which describes this experiment best is the Three Factor Crossed Mixed Effects Model. When comparing MSE between the models, this model has the lowest value at 1.2. MSE is the average of the squared errors, so a lower value indicates a lower error and a better model fit. This model includes three explanatory variables, `Brand`, `Temp`, and `Stirred`. While `Brand` and `Stirred ` are fixed effects because we are only interested in comparing "Name Brand" vs "Store Brand" and "Stirred" vs "Not Stirred", `Temp` is a random effect since the three temperatures have presumably been selected as a sample from the total population of temperatures at which one might dissolve a tablet. In reviewing the analysis of variance table for this model, we can see that all model terms are significant at the 5% level aside from one, the interaction effect between `Temperature` and `Stirred`. This is confirmed in the interaction plot below, where we observe the two lines to be parallel. We can see that the temperature reduces the dissolve time and whether or not it is stirred also affects dissolve time, but that temperature of the water and stirred status do not depend on the value of one another.
 
-```{r interaction, fig.align='center', out.width = "240px"}
+```{r interaction, fig.align='center', out.width = "220px"}
 interaction.plot(data$Temp, data$Stirred, data$Time,
                  type = "b", pch = 19, col = c(2,4),
                  main="Interaction Plot for Temp and Stirred Status",
@@ -194,6 +207,10 @@ interaction.plot(data$Temp, data$Stirred, data$Time,
 ```
 
 Additionally, we had to consider what to do with the blocking variable, `Stirred`. In order to investigate the effect of this on the response, we considered a two factor crossed mixed effects model without it and a three factor crossed mixed effects model with it. It is clear that the model which includes this variable is a much better model and the `Stirred` term was highly significant at the 1% level.  
+
+Finally, we should address the limitations on our analysis... *ADD*  
+
+# Appendix  
 
 ```{r tukey}
 TukeyHSD(amod3)
