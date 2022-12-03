@@ -148,8 +148,19 @@ par(mfrow = c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))
 summary(amod3)
 ```
 
-Our model is $Y_{ijkl}=\mu+\alpha_i+\beta_j+\gamma_k+(\alpha\beta)_{ij}+(\alpha\gamma)_{ik}+(\beta\gamma)_{jk}+(\alpha\beta\gamma)_{ijk}+E_{ijk}$  
+Our model is $Y_{ijkl}=\mu+\alpha_i+\beta_j+\gamma_k+(\alpha\beta)_{ij}+(\alpha\gamma)_{ik}+(\beta\gamma)_{jk}+(\alpha\beta\gamma)_{ijk}+E_{ijkl}$  
 
+for $i=1,2$;  $j=1,2,3$;  $k=1,2,3,4$;  $l=1,...,48$   
+
+$Y_{ijkl}$ is the dissolving time  
+$\mu$ is the overall mean  
+$\alpha_i$ is the fixed effect due to the ith brand  
+$\beta_j$ is the random effect due to the jth temperature  
+$\gamma_k$ is the fixed effect due to the kth stirred status  
+$\alpha\beta_{ij}$ is the interaction effect between the ith brand and jth temp  
+$\alpha\gamma_{ik}$ is the interaction effect between the ith brand and kth stirred status  
+$\beta\gamma_{jk}$ is the interaction effect between the jth temp and kth stirred status  
+$E_{ijkl}$ is the error term  
 
 ## Using Order as a Covariate with Time  
 
