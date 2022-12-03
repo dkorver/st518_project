@@ -191,4 +191,8 @@ interaction.plot(data$Temp, data$Stirred, data$Time,
                  ylab = "Mean Dissolve Time")
 ```
 
-Additionally, we had to consider what to do with the blocking variable, `Stirred`. In order to investigate the effect of this on the response, we considered a two factor crossed mixed effects model without it and a three factor crossed mixed effects model with it. It is clear that the model which includes this variable is a much better model and the `Stirred` term was highly significant at the 1% level.
+Additionally, we had to consider what to do with the blocking variable, `Stirred`. In order to investigate the effect of this on the response, we considered a two factor crossed mixed effects model without it and a three factor crossed mixed effects model with it. It is clear that the model which includes this variable is a much better model and the `Stirred` term was highly significant at the 1% level.  
+
+```{r tukey}
+TukeyHSD(amod3)
+```
