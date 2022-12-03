@@ -179,5 +179,7 @@ When we look at our model for Block 1 and Block 2, we see that our regression sl
 
 # Conclusion  
 *Effectively describe conclusions and reasons for recommendation, analysis limitations, and future work. Address the proper role of the Stirred variable in this analysis.*  
+
+The model which describes this experiment best is the Three Factor Crossed Mixed Effects Model. When comparing MSE between the models, this model has the lowest value at 1.2. MSE is the average of the squared errors, so a lower value indicates a lower error and a better model fit. This model includes three explanatory variables, `Brand`, `Temp`, and `Stirred`. While `Brand` and `Stirred ` are fixed effects because we are only interested in comparing "Name Brand" vs "Store Brand" and "Stirred" vs "Not Stirred", `Temp` is a random effect since the three temperatures have presumably been selected as a sample from the total population of temperatures at which one might dissolve a tablet. In reviewing the analysis of variance table for this model, we can see that all model terms are significant at the 5% level aside from one, the interaction effect between `Temperature` and `Stirred`.
  
 
