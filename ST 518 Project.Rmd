@@ -112,18 +112,18 @@ par(mfrow = c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))
 summary(amod1)
 ```
 
-Our model is $Y_{ijk}=\mu+\alpha_i+\beta_j+(\alpha\beta)_{ij}+E_{ijk}$  
+Our model is $Y_{ijk}=\mu+\alpha_i+B_j+(\alpha B)_{ij}+E_{ijk}$  
 
-for $i=1,2$;  $j=1,2,3$;  $k=1,2,3,4$  
+for $i=1,2$;  $j=1,2,3$;  $k=1,...,8$  
 
-where $\alpha_i$*~iid* $N(0,\sigma_\alpha^2)$;  $\beta_j$*~iid* $N(0,\sigma_\beta^2)$;  $(\alpha\beta)_{ij}$*~iid* $N(0,\sigma_{\alpha\beta}^2)$;  $E_{ijk}$*~iid* $N(0,\sigma^2)$  
+where $B_j$*~iid* $N(0,\sigma_\beta^2)$;  $(\alpha B)_{ij}$*~iid* $N(0,\sigma_{\alpha B}^2)$;  $E_{ijk}$*~iid* $N(0,\sigma^2)$  
 *We also require that each of the above are independent of each other.*   
 
 $Y_{ijk}$ is the dissolving time  
 $\mu$ is the overall mean  
 $\alpha_i$ is the fixed effect due to the ith brand  
-$\beta_j$ is the random effect due to the jth temperature  
-$\alpha\beta_{ij}$ is the interaction effect between the ith brand and jth temp  
+$B_j$ is the random effect due to the jth temperature  
+$\alpha B_{ij}$ is the interaction effect between the ith brand and jth temp  
 $E_{ijk}$ is the error term  
 
 ## Three Factor Analysis of Variance Model  
