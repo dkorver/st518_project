@@ -102,7 +102,7 @@ ggplot(data, aes(x = Temp, y = Time)) +
 
 ## Two Factor Crossed Mixed Effects Model  
 
-MOHAMMED TO TYPE HERE
+The diagnostic plots look pretty good. The residuals plot shows residuals randomly scattered around zero, and the Q-Q plot suggests they are normally distributed (with the possible exception of one observation, which may be an outlier). The scale-location plot shows the spread is constant over the range. 
 
 ```{r model 1, fig.align = 'center', out.width = "270px"}
 amod1 <- aov(Time ~ Brand + Temp + Brand:Temp, data = data)
@@ -128,6 +128,8 @@ $\epsilon_{ijk}$ is the error term
 
 ## Three Factor Analysis of Variance Model  
 
+The diagnostic plots look pretty good. The residuals plot shows residuals randomly scattered around zero, and the Q-Q plot suggests they are normally distributed in general. However, this model is more affected by outliers compared to the previous one. The scale-location plot shows the spread is constant over the range. 
+
 ```{r model 2, fig.align = 'center', out.width = "270px"}
 amod2 <- aov(Time ~ Brand + Temp + Stirred, data = data)
 par(mfrow = c(2,2), mar = c(2, 2, 2, 2))
@@ -150,7 +152,9 @@ $B_j$ is the random effect due to the jth temperature
 $\gamma_k$ is the fixed effect due to the kth stirred status  
 $\epsilon_{ijkl}$ is the error term  
 
-## Three Factor Crossed Mixed Effects Model  
+## Three Factor Crossed Mixed Effects Model 
+
+The diagnostic plots look pretty good. The residuals plot shows residuals randomly scattered around zero, and the Q-Q plot suggests they are normally distributed in general. However, this model is more affected by outliers compared to the first model. The scale-location plot shows the spread is constant over the range.
 
 ```{r model 3, fig.align = 'center', out.width = "270px"}
 amod3 <- aov(Time ~ Brand*Temp*Stirred, data = data)
