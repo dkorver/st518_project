@@ -26,7 +26,7 @@ data$Order <- as.factor(data$Order)
 
 # Executive Summary  
 
-In this "Effervescent Experiment", we looked at four models: a Two Factor Crossed Mixed Effects Model, a Three Factor Analysis of Variance Model, a Three Factor Crossed Mixed Effects Model, and a model using `Order` as a covariate with `Time`. We aimed to determine which would be most appropriate in determining whether there is a difference in the dissolving time of cold medicine tablets when varying degrees of temperature, whether agitation of the water by stirring it or not stirring it, and whether type of brand helped decrease the dissolve time. We found that our “Three Factor Crossed Mixed Effects Model” best fit the data when comparing the MSE values. When we investigated using `Order` as a covariate with `Time` to assist us in differentiating between the treatments, it further supported the evidence of using the “Three Factor Crossed Mixed Effects Model” because of the different slopes between when the water was stirred and not stirred on dissolving time.  
+In this "Effervescent Experiment", we looked at four models: a Two Factor Crossed Mixed Effects Model, a Three Factor Analysis of Variance Model, a Three Factor Crossed Mixed Effects Model, and a model using `Order` as a covariate with `Time`. The aim was to find which would be appropriate in assisting us in determining whether there is a difference in the dissolving time of cold medicine tablets at varying degrees of temperature, whether agitation of the water by stirring it or not stirring it, and whether type of brand helped decrease the dissolve time. We found that our “Three Factor Crossed Mixed Effects Model” best fit the data when comparing the MSE values. When we investigated using `Order` as a covariate with `Time` to assist us in differentiating between the treatments, it further supported the evidence of using the “Three Factor Crossed Mixed Effects Model” because of the different slopes between when the water was stirred and not stirred on dissolving time.  
 
 # Introduction  
 
@@ -195,11 +195,11 @@ knitr::include_graphics("figure_for_project.png")
 
 For Block I, where the liquid was stirred, there appears to be a downward linear trend in the dissolving time of the cold medicine tablets. For Block II, where the liquid was not stirred, there appears to be an upward linear trend in the dissolving time of the cold medicine tablets. Since the `Order` variable directly matches the `Stirred` variable, meaning the first 24 values of `Order` coincide with Block I and the second 24 values of `Order` coincide with Block II.  We know what the graph looks like when we graph `Time` and `Order` and group it by the `Stirred` variable.
 
-Let us test for equal slopes at each of the Temperatures (6,23,40) using the regression model:  
+Let us test for equal slopes at each of the temperatures (6, 23, 40) using the regression model:  
 
-Time = Brand + Temp + Brand*Temp      
+$Time = Brand + Temp + Brand:Temp$      
 
-Since the P-value for the interaction term Brand*Temp is <0.001 which is less than our significance level of 0.05, we conclude that the slopes are unequal for both Blocks.  
+Since the p-value for the interaction term `Brand:Temp` is <0.001 which is less than our significance level of 0.05, we conclude that the slopes are unequal for both blocks.  
 
 ```{r }
 #Test whether the slopes are equal
@@ -210,7 +210,7 @@ unequal_slopes_model_no<-lm(Time ~ Brand + Temp + Brand:Temp,data=subset(data,St
 anova(unequal_slopes_model_no)
 ``` 
 
-Looking at our coefficients, we can estimate that the lines for Store Brand and Name Brand for each of the Temperatures will be different.   
+Looking at our coefficients, we can estimate that the lines for store brand and name brand for each of the temperatures will be different.   
 
 ```{r }
 summary(unequal_slopes_model_yes)$coefficients
@@ -254,6 +254,8 @@ interaction.plot(data$Temp, data$Stirred, data$Time,
                  xlab = "Temperature",
                  ylab = "Mean Dissolve Time")
 ```
+
+In addition to this, there are several other interesting relationships which we can observe in the Tukey's HSD results in the appendix of this report. While the vast majority of the linear contrasts are significant, there are several which stand out as not significant. Most notably, for the results `store:6:no-name:6:no`, `store:6:yes-name:6:no`, `store:6:yes-name:23:no`, and `name:40:yes-store:23:yes`. We can observe that the mean dissolve time for a store brand sample at 6 degrees that was stirred is consistent among two of these, which leads us to believe that an outlier may be possible in this group due to an error from the experimenter.  
 
 Finally, we should address the limitations on our analysis... The sample size was on the smaller side, so the outliers did have an effect on the normality, as seen in the Q-Q plots. Additionally, we don't know whether the researcher was more concerned about these three temperatures as fixed effects, or whether they were interested in the effect of temperature in general. We assumed the latter throughout our analysis.     
 
