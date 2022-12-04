@@ -193,22 +193,29 @@ When we graph the `Order` variable with respect to `Time` and group it by `Stirr
 knitr::include_graphics("figure_for_project.png")
 ```  
 
-For Block I, where the liquid was stirred, there appears to be a downward linear trend in the dissolving time of the cold medicine tablets. For Block II, where the liquid was not stirred, there appears to be an upward linear trend in the dissolving time of the cold medicine tablets. Since the `Order` variable directly matches the `Stirred` variable, meaning the first 24 values of `Order` coincide with Block I and the second 24 values of `Order` coincide with Block II and the slopes for the two blocks are not moving in the same direction as we can observe looking at our initial graph, we can write our model similar to our "Three Factor Crossed Mixed Effects Model", but with a condition on the `Order` variable to match the slope of our initial graph.
+For Block I, where the liquid was stirred, there appears to be a downward linear trend in the dissolving time of the cold medicine tablets. For Block II, where the liquid was not stirred, there appears to be an upward linear trend in the dissolving time of the cold medicine tablets. Since the `Order` variable directly matches the `Stirred` variable, meaning the first 24 values of `Order` coincide with Block I and the second 24 values of `Order` coincide with Block II.  We know what the graph looks like when we graph `Time` and `Order` and group it by the `Stirred` variable.
 
-The first model will match the `Stirred`="yes" block:  
-$Y_{ijkl}=\mu+\alpha_i+B_j+\gamma_k+(\alpha B)_{ij}+\epsilon_{ijkl}$  
+Let us test for equal slopes at each of the Temperatures (6,23,40) using the regression model:  
 
-for $i=1,2$;  $j=1,2,3$;  $k=1,2,...,24$;  $l=1,2,3,4$
+Time = Brand + Temp + Brand*Temp      
 
-The second model will match the `Stirred`="no" block:  
-$Y_{ijkl}=\mu+\alpha_i+B_j+\gamma_k+(\alpha B)_{ij}+\epsilon_{ijkl}$  
+Since the P-value for the interaction term Brand*Temp is <0.001 which is less than our significance level of 0.05, we conclude that the slopes are unequal for both Blocks.  
 
-for $i=1,2$;  $j=1,2,3$;  $k=25,26,...,48$;  $l=1,2,3,4$  
+```{r }
+#Test whether the slopes are equal
+unequal_slopes_model_yes<-lm(Time ~ Brand + Temp + Brand:Temp,data=subset(data,Stirred=="yes"))
+anova(unequal_slopes_model_yes)
 
-where $Y_{ijkl}$ is the dissolving time; $\mu$ is the overall mean; $\alpha_i$ represents `Brand`; $B_j$ represents `Temp`; $\gamma_k$ represents `Order`;
-$(\alpha B)_{ij}$ represents our interaction between `Brand` and `Temp`; and $\epsilon_{ijk}$*~iid* $N(0,\sigma^2)$
+unequal_slopes_model_no<-lm(Time ~ Brand + Temp + Brand:Temp,data=subset(data,Stirred=="no"))
+anova(unequal_slopes_model_no)
+``` 
 
-When we look at our model for Block I and Block II, we see that our regression slopes are not all equal to 0 given the p-values (<0.001) for both models are less than our significance level of 0.05 and that there is a significant interaction effect. Since we have different slopes we can look at the differences between `Brand` and `Temp` at the different levels. For both blocks, we can see that there was not a significant difference between the brands at 6 degrees Celsius.
+Looking at our coefficients, we can estimate that the lines for Store Brand and Name Brand for each of the Temperatures will be different.   
+
+```{r }
+summary(unequal_slopes_model_yes)$coefficients
+summary(unequal_slopes_model_no)$coefficients
+``` 
 
 # Conclusion  
 
