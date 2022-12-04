@@ -26,7 +26,7 @@ data$Order <- as.factor(data$Order)
 
 # Executive Summary  
 
-In this "Effervescent Experiment", we looked at four models: Two Factor Crossed Mixed Effects Model, Three Factor Analysis of Variance Model, the Three Factor Crossed Mixed Effects Model, and whether using Order as a Covariate with Time would be appropriate in assisting us in whether there is a difference in the dissolving time of cold medicine tablets at varying degrees of temperature, whether agitation of the water by stirring it or not stirring it and whether type of Brand helped decrease the dissolve time. We found that our “Three Factor Crossed Mixed Effects Model” better fit the data when comparing the MSE values.  When we investigated using Order as a Covariate with Time to assist us in differentiating between the treatments, it further supported the evidence of using the “Three Factor Crossed Mixed Effects Model” because of the different slopes between when the water was stirred and not stirred on dissolving time.  
+In this "Effervescent Experiment", we looked at four models: a Two Factor Crossed Mixed Effects Model, a Three Factor Analysis of Variance Model, a Three Factor Crossed Mixed Effects Model, and a model using `Order` as a covariate with `Time`. We aimed to determine which would be most appropriate in determining whether there is a difference in the dissolving time of cold medicine tablets when varying degrees of temperature, whether agitation of the water by stirring it or not stirring it, and whether type of brand helped decrease the dissolve time. We found that our “Three Factor Crossed Mixed Effects Model” best fit the data when comparing the MSE values. When we investigated using `Order` as a covariate with `Time` to assist us in differentiating between the treatments, it further supported the evidence of using the “Three Factor Crossed Mixed Effects Model” because of the different slopes between when the water was stirred and not stirred on dissolving time.  
 
 # Introduction  
 
@@ -40,7 +40,7 @@ The experiment carried out was a complete block design where *b* = 2 blocks (by 
 
 # Exploratory Analysis  
 
-Summary statistics for each variable can be seen below. For the `Brand`, `Temp`, `Stirred`, and `Order` variables, we can see counts for each level. For the `Time` variable, we can see a five-number summary for the variable.  
+To begin our exploratory analysis, we view the summary statistics for each variable as seen below. For the `Brand`, `Temp`, `Stirred`, and `Order` variables, we can see counts for each level. For the `Time` variable, we can see a five-number summary for the variable.  
 
 ```{r summary stats}
 kable(summary(data), caption = "Summary Stats for Variables", digits = 2)
@@ -64,16 +64,17 @@ kable(data_stats, caption = "Summary Stats for Time by Group", digits = 2)
 
 The box plot below displays a five-number summary of dissolving time for each brand of tablet. The plot displays `Time` as a function of `Brand` and indicates that there is an effect of the brand on time.  
 
-```{r box plot time v brand, fig.align = 'center', out.width = "270px"}
+```{r box plot time v brand, fig.align = 'center', out.width = "300px"}
 ggplot(data, aes(x = Brand, y = Time)) + 
   geom_boxplot(fill = "cornflowerblue") + 
-  labs(title = "Tablet Dissolve Time for Brand", x = "Brand", y = "Time (in seconds)") +        scale_x_discrete(labels = c("Name", "Store")) +
+  labs(title = "Tablet Dissolve Time for Brand", x = "Brand", y = "Time (in seconds)") +
+  scale_x_discrete(labels = c("Name", "Store")) +
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
 The box plot below displays a five-number summary of dissolving time for each stirred status. The box plot displays `Time` as a function of `Stirred` and indicates that there is an effect of the stirred status on time.  
 
-```{r box plot time v stirred status, fig.align = 'center', out.width = "270px"}
+```{r box plot time v stirred status, fig.align = 'center', out.width = "300px"}
 ggplot(data, aes(x = Stirred, y = Time)) + 
   geom_boxplot(fill = "cornflowerblue") + 
   labs(title = "Tablet Dissolve Time for Stirred Status", x = "Stirred Status", y = "Time (in seconds)") + scale_x_discrete(labels = c("No", "Yes")) +
@@ -82,7 +83,7 @@ ggplot(data, aes(x = Stirred, y = Time)) +
 
 The box plot below displays the dissolving time for different water temperatures. `Time` is displayed as a function of `Temperature`, however, we can also see how the `Brand` and `Stirred` variables affect the dissolving time by observing the color and shape of the points. It is clear that a warmer temperature reduces the dissolving time. It also appears that, as mentioned above, stirring the water reduces the dissolving time and that at the higher temperatures, the store brand dissolves more quickly than the name brand tablets.   
 
-```{r box plot time v temp, fig.align = 'center', out.width = "320px"}
+```{r box plot time v temp, fig.align = 'center', out.width = "350px"}
 ggplot(data, aes(x = Temp, y = Time)) + 
   geom_boxplot() + 
   geom_point(aes(color = Stirred, shape = Brand)) + 
