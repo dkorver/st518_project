@@ -16,6 +16,14 @@ library(ggplot2)
 knitr::opts_chunk$set(echo = FALSE, message = FALSE)
 ```
 
+```{r data}
+data <- read_csv("effervescence.csv")
+data$Brand <- as.factor(data$Brand)
+data$Stirred <- as.factor(data$Stirred)
+data$Temp <- as.factor(data$Temp)
+data$Order <- as.factor(data$Order)
+```
+
 # Executive Summary  
 *A one or two paragraph summary that includes a description of the experiment, significant results (including any interesting numerical results), and any conclusions you draw. The reader should be able to glean all the important aspects of your work from the executive summary. Effectively and succinctly convey objectives, summary of experimental design, and results and conclusions drawn from experiment.*  
 
@@ -23,17 +31,6 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE)
 # Introduction  
 
 The purpose of this experiment is to investigate specific factors and their effect on the amount of time it takes to dissolve a cold medicine tablet in water. The data is from an “Effervescent Experiment” designed to compare dissolving times of two different brands of tablets (name brand and store brand) at three different equally spaced water temperatures (6$^\circ$C, 23$^\circ$C, and  40$^\circ$C). The run order number, as well as whether or not the sample was stirred, were also recorded and are investigated in the analysis portions of this report.  
-
-Below, we have a brief look at the first 10 of 48 rows of data in order to begin to gain an understanding of the data set we are working with.  
-
-```{r data}
-data <- read_csv("effervescence.csv")
-data$Brand <- as.factor(data$Brand)
-data$Stirred <- as.factor(data$Stirred)
-data$Temp <- as.factor(data$Temp)
-data$Order <- as.factor(data$Order)
-kable(head(data, n = 10), caption = "First 10 Rows of Effervescence Data")
-```
 
 
 # Experimental Design  
@@ -199,7 +196,73 @@ When we look at our model for Block 1 and Block 2, we see that our regression sl
 
 # Conclusion  
 
-The model which describes this experiment best is the Three Factor Crossed Mixed Effects Model. When comparing MSE between the models, this model has the lowest value at 1.2. MSE is the average of the squared errors, so a lower value indicates a lower error and a better model fit. This model includes three explanatory variables, `Brand`, `Temp`, and `Stirred`. While `Brand` and `Stirred ` are fixed effects because we are only interested in comparing "Name Brand" vs "Store Brand" and "Stirred" vs "Not Stirred", `Temp` is a random effect since the three temperatures have presumably been selected as a sample from the total population of temperatures at which one might dissolve a tablet. In reviewing the analysis of variance table for this model, we can see that all model terms are significant at the 5% level aside from one, the interaction effect between `Temperature` and `Stirred`. This is confirmed in the interaction plot below, where we observe the two lines to be parallel. We can see that the temperature reduces the dissolve time and whether or not it is stirred also affects dissolve time, but that temperature of the water and stirred status do not depend on the value of one another.
+The model which describes this experiment best is the Three Factor Crossed Mixed Effects Model. When comparing MSE between the models, this model has the lowest value at 1.2. MSE is the average of the squared errors, so a lower value indicates a lower error and a better model fit. This model includes three explanatory variables, `Brand`, `Temp`, and `Stirred`. While `Brand` and `Stirred ` are fixed effects because we are only interested in comparing "Name Brand" vs "Store Brand" and "Stirred" vs "Not Stirred", `Temp` is a random effect since the three temperatures have presumably been selected as a sample from the total population of temperatures at which one might dissolve a tablet.   
+
+Previously, we looked at the following image displaying the Type I SS analyses:  
+```{r}
+summary(amod3)
+
+MS.brand <- anova(amod3)[1,3]
+MS.temp <- anova(amod3)[2,3]
+MS.stirred <- anova(amod3)[3,3]
+MS.brand.temp <- anova(amod3)[4,3]
+MS.brand.stirred <- anova(amod3)[5,3]
+MS.temp.stirred <- anova(amod3)[6,3]
+MS.brand.temp.stirred <- anova(amod3)[7,3]
+MSE <- anova(amod3)[8,3]
+```
+
+However, because this is a mixed model, we must consider the Type III SS analyses, which are calculated below...  
+
+The following results display the F and p values for the main effect `Brand`. We can see that this effect is *not* significant at the 5% level.
+```{r brand}
+F.brand <- MS.brand/MS.brand.temp
+F.brand
+p.brand <- pf(F.brand,1,2,lower.tail=F)
+p.brand
+```
+
+The following results display the F and p values for the main effect `Stirred`. We can see that this effect is significant at the 5% level.
+```{r stirred}
+F.stirred <- MS.stirred/MS.temp.stirred
+F.stirred
+p.stirred <- pf(F.stirred,1,2,lower.tail=F)
+p.stirred
+```
+
+The following results display the F and p values for the interaction effect `Brand:Temp`. We can see that this effect is significant at the 5% level.
+```{r brand.temp}
+F.brand.temp <- MS.brand.temp/MS.brand.temp.stirred
+F.brand.temp
+p.brand.temp <- pf(F.brand.temp,2,2,lower.tail=F)
+p.brand.temp
+```
+
+The following results display the F and p values for the interaction effect `Brand:Stirred`. We can see that this effect is *not* significant at the 5% level.
+```{r brand.stirred}
+F.brand.stirred <- MS.brand.stirred/MS.brand.temp.stirred
+F.brand.stirred
+p.brand.stirred <- pf(F.brand.stirred,1,2,lower.tail=F)
+p.brand.stirred
+```
+
+The following results display the F and p values for the interaction effect `Temp:Stirred`. We can see that this effect is *not* significant at the 5% level.
+```{r}
+F.temp.stirred <- MS.temp.stirred/MS.brand.temp.stirred
+F.temp.stirred
+p.temp.stirred <- pf(F.temp.stirred,2,2,lower.tail=F)
+p.temp.stirred
+```
+
+The following results display the F and p values for the interaction effect `Brand:Temp:Stirred`. We can see that this effect is significant at the 5% level.
+```{r brand.temp.stirred}
+F.brand.temp.stirred <- MS.brand.temp.stirred/MSE
+F.brand.temp.stirred
+p.brand.temp.stirred <- pf(F.brand.temp.stirred,2,36,lower.tail=F)
+p.brand.temp.stirred
+```
+
+In reviewing the analysis of variance table for this model, we can see that all model terms are significant at the 5% level aside from one, the interaction effect between `Temperature` and `Stirred`. This is confirmed in the interaction plot below, where we observe the two lines to be parallel. We can see that the temperature reduces the dissolve time and whether or not it is stirred also affects dissolve time, but that temperature of the water and stirred status do not depend on the value of one another.
 
 ```{r interaction, fig.align='center', out.width = "220px"}
 interaction.plot(data$Temp, data$Stirred, data$Time,
