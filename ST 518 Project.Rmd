@@ -64,7 +64,7 @@ kable(data_stats, caption = "Summary Stats for Time by Group", digits = 2)
 
 The box plot below displays a five-number summary of dissolving time for each brand of tablet. The plot displays `Time` as a function of `Brand` and indicates that there is an effect of the brand on time.  
 
-```{r box plot time v brand, fig.align = 'center', out.width = "300px"}
+```{r box plot time v brand, fig.align = 'center', out.width = "350px"}
 ggplot(data, aes(x = Brand, y = Time)) + 
   geom_boxplot(fill = "cornflowerblue") + 
   labs(title = "Tablet Dissolve Time for Brand", x = "Brand", y = "Time (in seconds)") +
@@ -74,7 +74,7 @@ ggplot(data, aes(x = Brand, y = Time)) +
 
 The box plot below displays a five-number summary of dissolving time for each stirred status. The box plot displays `Time` as a function of `Stirred` and indicates that there is an effect of the stirred status on time.  
 
-```{r box plot time v stirred status, fig.align = 'center', out.width = "300px"}
+```{r box plot time v stirred status, fig.align = 'center', out.width = "350px"}
 ggplot(data, aes(x = Stirred, y = Time)) + 
   geom_boxplot(fill = "cornflowerblue") + 
   labs(title = "Tablet Dissolve Time for Stirred Status", x = "Stirred Status", y = "Time (in seconds)") + scale_x_discrete(labels = c("No", "Yes")) +
@@ -257,7 +257,8 @@ interaction.plot(data$Temp, data$Stirred, data$Time,
 
 In addition to this, there are several other interesting relationships which we can observe in the Tukey's HSD results in the appendix of this report. While the vast majority of the linear contrasts are significant, there are several which stand out as not significant. Most notably, for the results `store:6:no-name:6:no`, `store:6:yes-name:6:no`, `store:6:yes-name:23:no`, and `name:40:yes-store:23:yes`. We can observe that the mean dissolve time for a store brand sample at 6 degrees that was stirred is consistent among two of these, which leads us to believe that an outlier may be possible in this group due to an error from the experimenter.  
 
-Finally, we should address the limitations on our analysis... The sample size was on the smaller side, so the outliers did have an effect on the normality, as seen in the Q-Q plots. Additionally, we don't know whether the researcher was more concerned about these three temperatures as fixed effects, or whether they were interested in the effect of temperature in general. We assumed the latter throughout our analysis.     
+Finally, we should address the limitations on our analysis... The sample size was on the smaller side, so the outliers did have an effect on the normality, as seen in the Q-Q plots. Additionally, we don't know whether the researcher was more concerned about these three temperatures as fixed effects, or whether they were interested in the effect of temperature in general. We assumed the latter throughout our analysis.  
+
 
 # Appendix  
 
