@@ -259,7 +259,7 @@ In addition to this, there are several other interesting relationships which we 
 
 Finally, we should address the limitations on our analysis... The sample size was on the smaller side, so the outliers did have an effect on the normality, as seen in the Q-Q plots. Additionally, we don't know whether the researcher was more concerned about these three temperatures as fixed effects, or whether they were interested in the effect of temperature in general. We assumed the latter throughout our analysis.  
 
-
+\newpage
 # Appendix  
 
 ```{r tukey}
