@@ -196,7 +196,7 @@ When we look at our model for Block 1 and Block 2, we see that our regression sl
 
 # Conclusion  
 
-The model which describes this experiment best is the Three Factor Crossed Mixed Effects Model. When comparing MSE between the models, this model has the lowest value at 1.2. MSE is the average of the squared errors, so a lower value indicates a lower error and a better model fit. This model includes three explanatory variables, `Brand`, `Temp`, and `Stirred`. While `Brand` and `Stirred ` are fixed effects because we are only interested in comparing "Name Brand" vs "Store Brand" and "Stirred" vs "Not Stirred", `Temp` is a random effect since the three temperatures have presumably been selected as a sample from the total population of temperatures at which one might dissolve a tablet.   
+The model which describes this experiment best is the Three Factor Crossed Mixed Effects Model. When comparing MSE between the models, this model has the lowest value at 1.2. MSE is the average of the squared errors, so a lower value indicates a lower error and a better model fit. This model includes three explanatory variables, `Brand`, `Temp`, and `Stirred`. While `Brand` and `Stirred ` are fixed effects because we are only interested in comparing "Name Brand" vs "Store Brand" and "Stirred" vs "Not Stirred", `Temp` is a random effect since the three temperatures have presumably been selected as a sample from the total population of temperatures at which one might dissolve a tablet. One of the things we had to consider was what to do with the blocking variable, `Stirred`. So, in order to investigate the effect of this on the response, we considered a two factor crossed mixed effects model without it and a three factor crossed mixed effects model with it. It is clear that the model which includes this variable is a much better model and we can see below that the main effect `Stirred` was highly significant at the 1% level.    
 
 Previously, we looked at the following image displaying the Type I SS analyses:  
 ```{r}
@@ -262,7 +262,7 @@ p.brand.temp.stirred <- pf(F.brand.temp.stirred,2,36,lower.tail=F)
 p.brand.temp.stirred
 ```
 
-In reviewing the analysis of variance table for this model, we can see that all model terms are significant at the 5% level aside from one, the interaction effect between `Temperature` and `Stirred`. This is confirmed in the interaction plot below, where we observe the two lines to be parallel. We can see that the temperature reduces the dissolve time and whether or not it is stirred also affects dissolve time, but that temperature of the water and stirred status do not depend on the value of one another.
+In reviewing the above, we can see that while not all model terms are significant at the 5% level, the interaction effect between `Temperature` and `Stirred` stands out as being the least significant. This is confirmed in the interaction plot below, where we observe the two lines to be parallel. We can see that the temperature reduces the dissolve time and whether or not it is stirred also affects dissolve time, but that temperature of the water and stirred status do not depend on the value of one another.
 
 ```{r interaction, fig.align='center', out.width = "220px"}
 interaction.plot(data$Temp, data$Stirred, data$Time,
@@ -272,8 +272,6 @@ interaction.plot(data$Temp, data$Stirred, data$Time,
                  xlab = "Temperature",
                  ylab = "Mean Dissolve Time")
 ```
-
-Additionally, we had to consider what to do with the blocking variable, `Stirred`. In order to investigate the effect of this on the response, we considered a two factor crossed mixed effects model without it and a three factor crossed mixed effects model with it. It is clear that the model which includes this variable is a much better model and the `Stirred` term was highly significant at the 1% level.  
 
 Finally, we should address the limitations on our analysis...   
 
