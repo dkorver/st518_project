@@ -140,7 +140,7 @@ summary(amod2)
 
 Our model is $Y_{ijk}=\mu+\alpha_i+B_j+\gamma_k+\epsilon_{ijkl}$  
 
-for $i=1,2$;  $j=1,2,3$;  $k=1,2$;  $l=1,...48$  
+for $i=1,2$;  $j=1,2,3$;  $k=1,2$;  $l=1,2,3,4$  
 
 where $B_j$*~iid* $N(0,\sigma_B^2)$;  $\epsilon_{ijkl}$*~iid* $N(0,\sigma^2)$  
 *We also require that each of the above are independent of each other.*  
@@ -166,7 +166,7 @@ summary(amod3)
 
 Our model is $Y_{ijkl}=\mu+\alpha_i+B_j+\gamma_k+(\alpha B)_{ij}+(\alpha\gamma)_{ik}+(B\gamma)_{jk}+(\alpha B\gamma)_{ijk}+\epsilon_{ijkl}$  
 
-for $i=1,2$;  $j=1,2,3$;  $k=1,2$;  $l=1,...,48$   
+for $i=1,2$;  $j=1,2,3$;  $k=1,2$;  $l=1,2,3,4$   
 
 where $B_j$*~iid* $N(0,\sigma_B^2)$;  $(\alpha B)_{ij}$*~iid* $N(0,\sigma_{\alpha B}^2)$;  $B\gamma_{jk}$*~iid* $N(0,\sigma_{B\gamma}^2)$; $\alpha B\gamma_{ijk}$*~iid* $N(0,\sigma_{\alpha B\gamma}^2)$; $\epsilon_{ijk}$*~iid* $N(0,\sigma^2)$  
 *We also require that each of the above are independent of each other.*  
@@ -212,7 +212,7 @@ interaction.plot(data$Temp, data$Stirred, data$Time,
 
 Additionally, we had to consider what to do with the blocking variable, `Stirred`. In order to investigate the effect of this on the response, we considered a two factor crossed mixed effects model without it and a three factor crossed mixed effects model with it. It is clear that the model which includes this variable is a much better model and the `Stirred` term was highly significant at the 1% level.  
 
-Finally, we should address the limitations on our analysis... *ADD*  
+Finally, we should address the limitations on our analysis...   
 
 # Appendix  
 
